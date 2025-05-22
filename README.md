@@ -40,3 +40,6 @@ The Ansible command is used for running the hostname command on all hosts listed
 ```
 ansible-playbook 1stansible.yaml
 ```
+
+## what is lineinfile and blockinfile in ansible:
+In Ansible, lineinfile and blockinfile are modules used to manage the contents of files on a target system, especially for configuration management. 
