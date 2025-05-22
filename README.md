@@ -25,3 +25,18 @@ The Ansible command is used for running the hostname command on all hosts listed
 **--private-key=./id_rsa-**	Path to the SSH private key for authentication.
 **-m shell-**	Use the shell module to run shell commands.
 **-a hostname-**	The argument to the shell module — in this case, the **hostname** command.
+
+### 1stansible.yaml playbook(conmfiguration file):
+```yaml
+- name: Message print
+  hosts: all
+  tasks:
+  - name: Print message
+    debug:
+      msg: "Hello, World!"
+```
+
+### Command used to executes an Ansible playbook 
+```
+ansible-playbook 1stansible.yaml
+```
