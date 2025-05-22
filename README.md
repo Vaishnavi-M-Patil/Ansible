@@ -14,8 +14,14 @@
 2. Along with playbook we need **hosts file or inventory file** which will contains IP address of all servers on which we want to run playbook.
 3. After editing playbook and host file, you can run the ansible command which will run playbook on all the servers defined the host file using ssh.
 
-1stansible.yaml:
 ```yaml
-
-
+ansible -i hosts all -u ubuntu --private-key=./id_rsa -m shell -a hostname
 ```
+The Ansible command is used for running the hostname command on all hosts listed in your inventory file using the shell module. 
+
+**-i hosts-**	Specifies the inventory file named hosts.
+**all-**	Target group/hosts (here, all hosts in the inventory).
+**-u ubuntu-**	user name.
+**--private-key=./id_rsa-**	Path to the SSH private key for authentication.
+**-m shell-**	Use the shell module to run shell commands.
+**-a hostname-**	The argument to the shell module — in this case, the **hostname** command.
