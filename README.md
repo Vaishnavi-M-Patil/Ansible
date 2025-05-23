@@ -96,7 +96,236 @@ ansible-playbook 1stansible.yaml
         service: "nginx"
 ```
 ### Global variable:
+Global variables are accessible across the entire playbook. 
+```yaml
+- name: Install and configure Nginx
+  hosts: all
+vars:
+  service: "nginx"
+tasks:
+  - name: Install service
+     apt:
+        name: "{{ service }}"
+        state: present
+```
+### Variable File:
+External file that contains variables.
+```yaml
+- name: Install and configure apache2
+  hosts: all
+  vars_files:
+    - ./var.txt
+  tasks:
+    - name: Install service
+       apt:
+          name: "{{ service }}"
+          state: present
+```
+var.txt:
+```
+service: "apache2"
+```
 
+### command line variable:
+```
+ansible-playbook -e service=apache2 ansible.yaml
+```
+
+### prompt variable:
+- Used to ask the user for input when the playbook runs.
+- vars_prompt must be outside the **tasks:** block.
+- Prompts are only available at playbook run time, not in ad-hoc commands.
+- You can use input anywhere with {{ variable_name }}.
+```yaml
+- name: Prompt variable
+  hosts: all
+  vars_prompt:
+    - name: movie
+      prompt: Enter the movie name
+      private: no                         # shows the input
+  tasks:
+    - name: print movie
+       debug:
+          msg: "This is {{ movie }}"
+```
+
+### register variable:
+Stores the output of a command or task.
+```yaml
+- name: Register variable
+  hosts: all
+  tasks:
+    - name: Get hostname
+       shell: hostname
+       register: host                           # store output of shell in host variable
+    - name: print hostname
+       debug: 
+          msg: "This is {{ host.stdout }}"
+```
+
+### Pass variable from hosts file:
+- In Ansible, you can pass variables directly from the hosts inventory file (usually hosts or inventory) by defining them next to the host entries or in group/host variable files.
+- It contains least priority
+```
+192.168.1.10   movie = thar
+```
+```yaml
+- name: Use variable from inventory
+  hosts: all
+  tasks:
+    - debug:
+        msg: "Movie name is {{ movie }}"
+```
+
+## Gathering facts:
+The command **ansible all -m setup** is used to gather and display system facts (hardware, network, OS details, etc.) from all managed hosts.
+```
+ansible all -m setup
+```
+- **all:** Run on all hosts in your inventory.
+- **-m setup:** Use the setup module, which collects facts about the system.
+To view specific facts, use **-a** with a filter:
+```
+ansible all -m setup -a 'filter=ansible_hostname'
+```
+```yaml
+- name: Print gathering facts
+  hosts: all
+  tasks:
+    - debug:
+        msg: "Hello this is {{ ansible_os_family }}"
+```
+
+## conditions:
+Conditions in Ansible are used to **run tasks only when certain criteria are met**, using the *when* keyword.
+```yaml
+- name: Install Apache on Debian
+  apt:
+    name: apache2
+    state: present
+  when: ansible_os_family == "Debian"
+```
+
+## Package module:
+The package module is a generic way to manage software packages, regardless of the underlying package manager (like apt, yum, dnf etc.).
+| State |	Description |
+| ----- | ------ |
+| present | Ensures the package is installed. Does nothing if already installed |
+| absent |	Ensures the package is removed/uninstalled |
+| latest | Ensures the latest version of the package is installed (if available) |
+```yaml
+- name: Print gathering facts
+  hosts: all
+  tasks:
+    - name:  Install a package if not already installed
+      package:
+         name: nginx
+         state: present
+  
+   - name: Remove package
+     package:
+        name: apache2
+        state: absent
+
+   - name: Install the latest version of a package
+     package:
+       name: curl
+       state: latest
+```
+
+## privilege in ansible:
+- In Ansible, privilege escalation allows you to run tasks as root user, even if you're connected as a regular user.
+- If **become: yes** is set in the playbook, then all tasks in the playbook will run with elevated privileges.
+```yaml
+- name: Install nginx with root privileges
+  hosts: webservers
+  become: yes                                    # Enable sudo
+  tasks:
+    - name: Install nginx
+      apt:
+        name: nginx
+        state: present
+```
+You can also use it per task if only some tasks need sudo:
+```yaml
+tasks:
+  - name: Run a command as root
+    command: apt update
+    become: yes
+```
+You can configure privilege (become) globally using the **ansible.cfg** file.
+
+Edit your /etc/ansible/ansible.cfg and add:
+```
+[defaults]
+become = True
+```
+run an ad-hoc command with privilege:
+```
+ansible all -m apt -a "name=nginx state=present" -b                  # Here -b = --become
+```
+
+## service module:
+- The service module in Ansible is used to start, stop, restart, or enable/disable services on target machines.
+- On modern systems (like Ubuntu 18.04+, CentOS 7+), this works with systemd.
+
+| Parameter |	Description |
+| ------- |----------- |
+| name | Name of the service (e.g., nginx, httpd) |
+| state | Desired state: started, stopped, restarted, reloaded |
+| enabled |	Whether the service should start at boot: yes / no |
+
+```yaml
+- name: Manage nginx service
+  hosts: webservers
+  become: yes
+  tasks:
+    - name: Ensure nginx is started
+      service:
+        name: nginx
+        state: started
+        enabled: yes
+```
+
+### daemon_reload in Ansible's systemd Module:
+- The daemon_reload option in the systemd module is used to tell systemd to reload its configuration. 
+- Use daemon_reload: yes after:
+   - Creating or modifying a systemd service file (/etc/systemd/system/myapp.service)
+   - Changing unit file properties (ExecStart, Environment, etc.)
+- **daemon_reload** does not restart services.
+- It only refreshes systemd's in-memory configuration database.
+```yaml
+- name: Install and configure a custom service
+  hosts: all
+  become: yes
+  tasks:
+    - name: Copy custom systemd unit file
+      copy:
+        src: myservice.service
+        dest: /etc/systemd/system/myservice.service
+        mode: '0644'
+
+    - name: Reload systemd daemon
+      systemd:
+        daemon_reload: yes
+
+    - name: Start and enable the custom service
+      systemd:
+        name: myservice
+        state: started
+        enabled: yes
+```
+You would create **myservice.service** file locally (in the same folder as your playbook):
+```
+[Unit]
+Description=My Custom Service
+
+[Service]
+ExecStart=/usr/bin/python3 -m http.server 8080
+
+[Install]
+WantedBy=multi-user.target
+```
 
 
 ## what is lineinfile, blockinfile, tags in ansible:
