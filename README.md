@@ -40,7 +40,37 @@ The Ansible command is used for running the hostname command on all hosts listed
 ```
 ansible-playbook 1stansible.yaml
 ```
+---------------------------------------------------------------------------------
+| ansible         	| Run single ad-hoc commands on target hosts                |
+--------------------------------------------------------------------------------
+| ansible-playbook	| Run a YAML playbook with multiple tasks, logic, and roles |
+--------------------------------------------------------------------------------
 
-## what is lineinfile and blockinfile in ansible:
+## what is lineinfile, blockinfile, tags in ansible:
 In Ansible, lineinfile and blockinfile are modules used to manage the contents of files on a target system, especially for configuration management. 
 
+### lineinfile module:
+The lineinfile module in Ansible is used to add, modify, or remove lines in a file. The lineinfile module looks for a specific line in a file and replaces it with a predefined regular expression.
+
+### blockinfile module:
+blockinfile inserts, modifies, or deletes one or several lines of text located between two marker lines in a file.
+
+### tags:
+Tags in Ansible allow you to run specific parts of a playbook rather than executing everything. 
+
+```yaml
+- name: add line in index.html
+      lineinfile:
+        path: /var/www/html/index.html
+        line: "Hello this line is added in this file"
+      tags: lineinfile
+
+    - name: Add block in index.html
+      blockinfile:
+        path: /var/www/html/index.html
+        block: |
+          <h2>Hello world!</h2>
+          <p>Hello world!</p>
+        marker: "# {mark} ANSIBLE MANAGED BLOCK"
+      tags: blockinfile
+```
