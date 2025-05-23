@@ -1,18 +1,24 @@
 # Ansible
 ## What is ansible?
-- Ansible is an open source configuration management tool that used to automate infrastructure management and configuration.
-- Using ansible we can manage thousands of servers with just a single command.
-- It is based on push based mechanism.
-- 22 port number.
-- master slave architecture.
+- Ansible is an open source **configuration management tool** that used to automate infrastructure management and configuration.
+- Using ansible we can **manage thousands of servers with just a single command**.
+- It is based on **push based mechanism**.
+- **Agentless:** No need to install agents on managed nodes.
+- Uses **SSH (Port 22)** for communication.
+- **master slave architecture:**
+   - **Control Node:** Runs Ansible commands and playbooks.
+   - **Managed Nodes:** Remote servers managed by Ansible (no agents needed).
 - /etc/ansible/  --> main directory of ansible.
 - ansible.cfg --> A configuration file that controls Ansible’s behavior and default settings.
+- hosts --> Inventory file defining groups and IPs of managed nodes
 - ansible playbook (*.yml) --> A YAML file that defines a set of tasks to be executed on managed nodes.
 
 ## yaml(yet another markup language):
 - Easy to read and write
+- YAML stands for yet another markup language or YAML ain’t markup language 
 - Start with --- (Optional but good practice) and end with ... (optional Only used if you're combining multiple YAML documents in one file).
 - .yaml or .yml file extension
+- Comments can be identified with a pound or hash symbol (#).
 - Use '-' for lists
 - Key-value pairs with :
 - Indentation is critical
@@ -58,7 +64,7 @@ The Ansible command is used for running the hostname command on all hosts listed
 **-m shell-**	Use the shell module to run shell commands.
 **-a hostname-**	The argument to the shell module — in this case, the **hostname** command.
 
-### 1stansible.yaml playbook(conmfiguration file):
+### 1stansible.yaml playbook(configuration file):
 ```yaml
 - name: Message print
   hosts: all
@@ -76,6 +82,22 @@ ansible-playbook 1stansible.yaml
 | ----- | ------ |
 | ansible | Ad-hoc commands are one-liner commands used to perform quick tasks on remote systems without writing a full playbook. |
 | ansible-playbook | Run a YAML playbook with multiple tasks, logic, and roles |
+
+
+## variables:
+### local variable : 
+- Defined within a task and used locally        
+```yaml
+- name: Install service
+      apt:
+        name: "{{ service }}"
+        state: present
+      vars:
+        service: "nginx"
+```
+### Global variable:
+
+
 
 ## what is lineinfile, blockinfile, tags in ansible:
 In Ansible, lineinfile and blockinfile are modules used to manage the contents of files on a target system, especially for configuration management. 
