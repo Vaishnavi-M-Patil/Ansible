@@ -3,11 +3,43 @@
 - Ansible is an open source configuration management tool that used to automate infrastructure management and configuration.
 - Using ansible we can manage thousands of servers with just a single command.
 - It is based on push based mechanism.
-- configuration file called playbook.
 - 22 port number.
 - master slave architecture.
 - /etc/ansible/  --> main directory of ansible.
-- .yaml(yet another markup language) or .yml extension
+- ansible.cfg --> A configuration file that controls Ansible’s behavior and default settings.
+- ansible playbook (*.yml) --> A YAML file that defines a set of tasks to be executed on managed nodes.
+
+## yaml(yet another markup language):
+- Easy to read and write
+- Start with --- (Optional but good practice) and end with ... (optional Only used if you're combining multiple YAML documents in one file).
+- .yaml or .yml file extension
+- Use '-' for lists
+- Key-value pairs with :
+- Indentation is critical
+   → Use spaces only, no tabs
+   → Typically 2 spaces
+- Strings with special characters need quotes
+- Modules use dictionaries
+```yaml
+---
+- name: Install and start Nginx          #Describes what the play or task does.
+  hosts: webservers                      #Target group of servers defined in your inventory.
+  become: yes                            #Run tasks with sudo/root privileges.
+
+  tasks:                                #List of actions to perform.
+    - name: Install Nginx
+      apt:                                #Module used to manage packages (for Debian/Ubuntu).
+        name: nginx                       
+        state: present
+        update_cache: yes                #Runs apt-get update before installation.
+
+    - name: Start and enable Nginx
+      service:                          #Module used to manage system services.
+        name: nginx
+        state: started
+        enabled: yes                    #Enable service at boot	
+...
+```
 
 ## How ansible works?
 1. Ansible uses playbook written in yaml syntax where we can define all tasks and configurations that we want to apply on all the servers.
@@ -36,13 +68,13 @@ The Ansible command is used for running the hostname command on all hosts listed
       msg: "Hello, World!"
 ```
 
-### Command used to executes an Ansible playbook 
+### Command used to executes an Ansible playbook:
 ```
 ansible-playbook 1stansible.yaml
 ```
 | command | usecase|
 | ----- | ------ |
-| ansible | Run single ad-hoc commands on target hosts                |
+| ansible | Ad-hoc commands are one-liner commands used to perform quick tasks on remote systems without writing a full playbook. |
 | ansible-playbook | Run a YAML playbook with multiple tasks, logic, and roles |
 
 ## what is lineinfile, blockinfile, tags in ansible:
