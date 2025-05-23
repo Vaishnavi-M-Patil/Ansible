@@ -315,17 +315,55 @@ ansible all -m apt -a "name=nginx state=present" -b                  # Here -b =
         state: started
         enabled: yes
 ```
-You would create **myservice.service** file locally (in the same folder as your playbook):
-```
-[Unit]
-Description=My Custom Service
 
-[Service]
-ExecStart=/usr/bin/python3 -m http.server 8080
-
-[Install]
-WantedBy=multi-user.target
+## Loops in Ansible: 
+Loops in Ansible are used to repeat a task multiple times with different items.
+```yaml
+- name: Install multiple packages
+  apt:
+    name: "{{ item }}"
+    state: present
+  loop:
+    - nginx
+    - git
+    - curl
 ```
+Loop with dictionaries:
+```yaml
+- name: Create users with specific shells
+  hosts: all
+  become: yes
+  tasks:
+    - name: Add users with custom shells
+      user:
+        name: "{{ item.name }}"
+        shell: "{{ item.shell }}"
+        state: present
+      loop:
+        - { name: 'alice', shell: '/bin/bash' }
+        - { name: 'bob', shell: '/bin/sh' }
+```
+
+## Copy module:
+The copy module is used to copy files from your Ansible control node (local machine) to the managed hosts.
+```yaml
+- name: Copy a file to remote server
+  copy:
+    src: /path/to/local/file.txt
+    dest: /path/on/remote/file.txt
+    # owner: www-data
+    # group: www-data
+    # mode: '0644'
+```
+| Option | Description |
+| ------ | ---------- |
+| src	| Path to the source file on the control node |
+| dest | Path on the managed node to copy the file to |
+| owner | Set the file owner on the remote system |
+| group | Set the file group on the remote system |
+| mode |	Set file permissions (e.g., '0644') |
+| content |	Use this instead of src to directly write text into the destination file |
+| backup |	Creates a backup before overwriting an existing file |
 
 
 ## what is lineinfile, blockinfile, tags in ansible:
