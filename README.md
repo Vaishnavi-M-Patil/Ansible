@@ -42,7 +42,6 @@ ansible-playbook 1stansible.yaml
 ```
 ---------------------------------------------------------------------------------
 | ansible         	| Run single ad-hoc commands on target hosts                |
---------------------------------------------------------------------------------
 | ansible-playbook	| Run a YAML playbook with multiple tasks, logic, and roles |
 --------------------------------------------------------------------------------
 
