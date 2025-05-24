@@ -13,6 +13,8 @@
 - hosts --> Inventory file defining groups and IPs of managed nodes
 - ansible playbook (*.yml) --> A YAML file that defines a set of tasks to be executed on managed nodes.
 
+![Screenshot (409)](https://github.com/Vaishnavi-M-Patil/AnsibleRepo/blob/main/diagram.jpg)
+
 ## yaml(yet another markup language):
 - Easy to read and write
 - YAML stands for yet another markup language or YAML ain’t markup language 
