@@ -51,6 +51,8 @@
 ...
 ```
 
+--- 
+
 ## ✅ How ansible works?
 1. Ansible uses playbook written in yaml syntax where we can define all tasks and configurations that we want to apply on all the servers.
 2. Along with playbook we need **hosts file or inventory file** which will contains IP address of all servers on which we want to run playbook.
@@ -87,6 +89,7 @@ ansible-playbook 1stansible.yaml
 | ansible | Ad-hoc commands are one-liner commands used to perform quick tasks on remote systems without writing a full playbook. |
 | ansible-playbook | Run a YAML playbook with multiple tasks, logic, and roles |
 
+---
 
 ## ✅ variables:
 ### local variable : 
@@ -181,6 +184,8 @@ Stores the output of a command or task.
         msg: "Movie name is {{ movie }}"
 ```
 
+---
+
 ## ✅ Gathering facts:
 The command **ansible all -m setup** is used to gather and display system facts (hardware, network, OS details, etc.) from all managed hosts.
 ```
@@ -200,6 +205,8 @@ ansible all -m setup -a 'filter=ansible_hostname'
         msg: "Hello this is {{ ansible_os_family }}"
 ```
 
+---
+
 ## ✅ conditions:
 Conditions in Ansible are used to **run tasks only when certain criteria are met**, using the *when* keyword.
 ```yaml
@@ -209,6 +216,8 @@ Conditions in Ansible are used to **run tasks only when certain criteria are met
     state: present
   when: ansible_os_family == "Debian"
 ```
+
+---
 
 ## ✅ Package module:
 The package module is a generic way to manage software packages, regardless of the underlying package manager (like apt, yum, dnf etc.).
@@ -236,6 +245,8 @@ The package module is a generic way to manage software packages, regardless of t
        name: curl
        state: latest
 ```
+
+---
 
 ## ✅ privilege in ansible:
 - In Ansible, privilege escalation allows you to run tasks as root user, even if you're connected as a regular user.
@@ -268,6 +279,8 @@ run an ad-hoc command with privilege:
 ```
 ansible all -m apt -a "name=nginx state=present" -b                  # Here -b = --become
 ```
+
+---
 
 ## ✅ service module:
 - The service module in Ansible is used to start, stop, restart, or enable/disable services on target machines.
@@ -320,6 +333,8 @@ ansible all -m apt -a "name=nginx state=present" -b                  # Here -b =
         enabled: yes
 ```
 
+---
+
 ## ✅ Loops in Ansible: 
 Loops in Ansible are used to repeat a task multiple times with different items.
 ```yaml
@@ -348,6 +363,8 @@ Loop with dictionaries:
         - { name: 'bob', shell: '/bin/sh' }
 ```
 
+---
+
 ## ✅ Copy module:
 The copy module is used to copy files from your Ansible control node (local machine) to the managed hosts.
 ```yaml
@@ -369,6 +386,7 @@ The copy module is used to copy files from your Ansible control node (local mach
 | content |	Use this instead of src to directly write text into the destination file |
 | backup |	Creates a backup before overwriting an existing file |
 
+---
 
 ## ✅ what is lineinfile, blockinfile, tags in ansible:
 In Ansible, lineinfile and blockinfile are modules used to manage the contents of files on a target system, especially for configuration management. 
