@@ -1,5 +1,5 @@
 # Ansible
-## What is ansible?
+## ✅ What is ansible?
 - Ansible is an open source **configuration management tool** that used to automate infrastructure management and configuration.
 - Using ansible we can **manage thousands of servers with just a single command**.
 - It is based on **push based mechanism**.
@@ -15,7 +15,7 @@
 
 ![Screenshot (409)](https://github.com/Vaishnavi-M-Patil/AnsibleRepo/blob/main/diagram.jpg)
 
-## yaml(yet another markup language):
+## ✅ yaml(yet another markup language):
 - Easy to read and write
 - YAML stands for yet another markup language or YAML ain’t markup language 
 - Start with --- (Optional but good practice) and end with ... (optional Only used if you're combining multiple YAML documents in one file).
@@ -49,7 +49,7 @@
 ...
 ```
 
-## How ansible works?
+## ✅ How ansible works?
 1. Ansible uses playbook written in yaml syntax where we can define all tasks and configurations that we want to apply on all the servers.
 2. Along with playbook we need **hosts file or inventory file** which will contains IP address of all servers on which we want to run playbook.
 3. After editing playbook and host file, you can run the ansible command which will run playbook on all the servers defined the host file using ssh.
@@ -86,7 +86,7 @@ ansible-playbook 1stansible.yaml
 | ansible-playbook | Run a YAML playbook with multiple tasks, logic, and roles |
 
 
-## variables:
+## ✅ variables:
 ### local variable : 
 - Defined within a task and used locally        
 ```yaml
@@ -179,7 +179,7 @@ Stores the output of a command or task.
         msg: "Movie name is {{ movie }}"
 ```
 
-## Gathering facts:
+## ✅ Gathering facts:
 The command **ansible all -m setup** is used to gather and display system facts (hardware, network, OS details, etc.) from all managed hosts.
 ```
 ansible all -m setup
@@ -198,7 +198,7 @@ ansible all -m setup -a 'filter=ansible_hostname'
         msg: "Hello this is {{ ansible_os_family }}"
 ```
 
-## conditions:
+## ✅ conditions:
 Conditions in Ansible are used to **run tasks only when certain criteria are met**, using the *when* keyword.
 ```yaml
 - name: Install Apache on Debian
@@ -208,7 +208,7 @@ Conditions in Ansible are used to **run tasks only when certain criteria are met
   when: ansible_os_family == "Debian"
 ```
 
-## Package module:
+## ✅ Package module:
 The package module is a generic way to manage software packages, regardless of the underlying package manager (like apt, yum, dnf etc.).
 | State |	Description |
 | ----- | ------ |
@@ -235,7 +235,7 @@ The package module is a generic way to manage software packages, regardless of t
        state: latest
 ```
 
-## privilege in ansible:
+## ✅ privilege in ansible:
 - In Ansible, privilege escalation allows you to run tasks as root user, even if you're connected as a regular user.
 - If **become: yes** is set in the playbook, then all tasks in the playbook will run with elevated privileges.
 ```yaml
@@ -267,7 +267,7 @@ run an ad-hoc command with privilege:
 ansible all -m apt -a "name=nginx state=present" -b                  # Here -b = --become
 ```
 
-## service module:
+## ✅ service module:
 - The service module in Ansible is used to start, stop, restart, or enable/disable services on target machines.
 - On modern systems (like Ubuntu 18.04+, CentOS 7+), this works with systemd.
 
@@ -318,7 +318,7 @@ ansible all -m apt -a "name=nginx state=present" -b                  # Here -b =
         enabled: yes
 ```
 
-## Loops in Ansible: 
+## ✅ Loops in Ansible: 
 Loops in Ansible are used to repeat a task multiple times with different items.
 ```yaml
 - name: Install multiple packages
@@ -346,7 +346,7 @@ Loop with dictionaries:
         - { name: 'bob', shell: '/bin/sh' }
 ```
 
-## Copy module:
+## ✅ Copy module:
 The copy module is used to copy files from your Ansible control node (local machine) to the managed hosts.
 ```yaml
 - name: Copy a file to remote server
@@ -368,7 +368,7 @@ The copy module is used to copy files from your Ansible control node (local mach
 | backup |	Creates a backup before overwriting an existing file |
 
 
-## what is lineinfile, blockinfile, tags in ansible:
+## ✅ what is lineinfile, blockinfile, tags in ansible:
 In Ansible, lineinfile and blockinfile are modules used to manage the contents of files on a target system, especially for configuration management. 
 
 ### lineinfile module:
