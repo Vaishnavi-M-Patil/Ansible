@@ -4,6 +4,7 @@
 - Using ansible we can **manage thousands of servers with just a single command**.
 - It is based on **push based mechanism**.
 - **Agentless:** No need to install agents on managed nodes.
+- It is developed by RedHat.
 - Uses **SSH (Port 22)** for communication.
 - **master slave architecture:**
    - **Control Node:** Runs Ansible commands and playbooks.
