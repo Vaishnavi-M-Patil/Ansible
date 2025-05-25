@@ -19,26 +19,37 @@
 ### Key Ansible Concepts:
 **Modules:**
 Small programs that perform specific tasks, such as installing software, managing files, or configuring services, on remote hosts. 
+
 **Playbooks:**
 YAML files that define a series of tasks (using modules) to achieve a desired system state. 
+
 **Roles:**
 A way to organize and reuse playbooks, making them more modular and manageable. 
+
 **Inventory:**
 A list of managed hosts and their associated groups that Ansible uses to target specific servers or groups of servers. 
+
 **Tasks:**
 Individual units of action within a playbook, each specifying a module and its arguments. 
+
 **Ad-hoc Commands:**
 Single, quick commands executed directly on a host, useful for testing or quick fixes. 
+
 **Ansible Vault:**
 A tool for encrypting sensitive data like passwords and API keys within playbooks, ensuring their security. 
+
 **Ansible Galaxy:**
-A community-driven repository where users can find and share roles and other Ansible content. 
+A community-driven repository where users can find and share roles and other Ansible content.
+
 **Ansible Tower:**
 A commercial product that adds features like web UI, job scheduling, and user management to Ansible. 
+
 **Configuration Management:**
 The process of defining and managing the desired state of systems, which Ansible automates. 
+
 **Continuous Integration/Continuous Delivery (CI/CD):**
 Ansible is often used within CI/CD pipelines to automate tasks like application deployment and infrastructure updates. 
+
 ---
 
 ## ✅ yaml(yet another markup language):
