@@ -442,9 +442,9 @@ The copy module is used to copy files from your Ansible control node (local mach
 ```
 - This module is part of the ansible.windows collection (version 2.8.0).
 - You might already have this collection installed if you are using the ansible package. It is not included in ansible-core. To check whether it is installed, run 
-```ansible-galaxy collection list```
-- To install it, use: ```ansible-galaxy collection install ansible.windows```
-- To use it in a playbook, specify: ```ansible.windows.win_copy```
+`ansible-galaxy collection list`
+- To install it, use: `ansible-galaxy collection install ansible.windows`
+- To use it in a playbook, specify: `ansible.windows.win_copy`
 ```
 ````
 - The win_copy module copies a file on the local box to remote windows locations.
