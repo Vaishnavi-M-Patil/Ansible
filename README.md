@@ -381,7 +381,7 @@ Loop with dictionaries:
 
 ---
 
-## ✅ Copy module: [more information](https://docs.ansible.com/ansible/latest/collections/ansible/builtin/copy_module.html)
+## ✅ Copy module: [for more](https://docs.ansible.com/ansible/latest/collections/ansible/builtin/copy_module.html)
 The copy module is used to copy files from your Ansible control node (local machine) to the managed hosts.
 ```yaml
 - name: Copy a file to remote server
