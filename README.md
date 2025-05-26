@@ -107,6 +107,23 @@ ansible-playbook 1stansible.yaml
 
 ---
 
+## ✅ FQCN (Fully Qualified Collection Name):
+- FQCN stands for Fully Qualified Collection Name.
+- It is the complete path to a module or plugin in Ansible.
+#### syntax:
+```
+<collection_namespace>.<collection_name>.<module_or_plugin_name>
+```
+#### example:
+```
+ansible.builtin.copy
+ansible.builtin.fetch
+```
+#### Why Use FQCN?
+- Avoid naming conflicts when multiple collections have modules with the same name.
+
+---
+
 ## ✅ variables:
 ### local variable : 
 - Defined within a task and used locally        
@@ -401,6 +418,22 @@ The copy module is used to copy files from your Ansible control node (local mach
 | mode |	Set file permissions (e.g., '0644') |
 | content |	Use this instead of src to directly write text into the destination file |
 | backup |	Creates a backup before overwriting an existing file |
+
+---
+
+## fetch module:
+- This module works like ansible.builtin.copy, but in reverse.
+- It is used for fetching files from remote machines and storing them locally in a file tree, organized by hostname.
+- Files that already exist at dest will be overwritten if they are different than the src.
+- This module is also supported for Windows targets.
+#### Example:
+```yaml
+- name: Store file into /tmp/fetched/host.example.com/tmp/somefile
+  ansible.builtin.fetch:
+    src: /tmp/somefile
+    dest: /tmp/fetched
+```
+ if `dest=/tmp/fetched`, then `src=/tmp/somefile` on host `host.example.com`, would save the file into `/backup/host.example.com/etc/profile`. The host name is based on the inventory name.
 
 ---
 
