@@ -526,3 +526,79 @@ Tags in Ansible allow you to run specific parts of a playbook rather than execut
         marker: "# {mark} ANSIBLE MANAGED BLOCK"
       tags: blockinfile
 ```
+---
+
+## ✅ Roles:
+### What Are Roles in Ansible?
+- Roles are a way to organize and reuse Ansible code.
+- They split complex playbooks into smaller, manageable, reusable components.
+- Roles help in structuring tasks, variables, files, handlers, templates, and more into a standard layout.
+
+### Steps to Create a Role:
+- Navigate to your Ansible project directory.
+- Use the command:
+```
+ansible-galaxy init <role_name>
+```
+Example:
+```
+ansible-galaxy init apache
+```
+- Roles are stored in the `roles/` directory.
+- A default role structure is created under `roles/apache`.
+
+### Role directory structure:
+An Ansible role has a defined directory structure with seven main standard directories. You must include at least one of these directories in each role. You can omit any directories the role does not use.
+```
+roles/
+    common/               
+        tasks/             # Main list of tasks
+            main.yml      
+        handlers/         #  Contains handlers that can be triggered by other tasks.
+            main.yml      
+        templates/        #  templates to use in the role or child roles
+            ntp.conf.j2   
+        files/            # Contains files that can be deployed by the role.
+            bar.txt         
+            foo.sh        
+        vars/             # higher priority variables associated with this role 
+            main.yml      
+        defaults/         #  default lower priority variables for this role
+            main.yml      
+        meta/             # Metadata about the role and role dependencies
+            main.yml       
+
+```
+- By default, Ansible will look in most role directories for a main.yml file.
+
+### Using Role in a Playbook:
+```yaml
+- name: Setup Web Server
+  hosts: web
+  roles:
+    - webserver
+```
+
+You can add other YAML files in some directories, but they won’t be used by default. They can be included/imported directly.For example, you can place platform-specific tasks in separate files and refer to them in the tasks/main.yml file:
+```yaml
+# roles/example/tasks/main.yml
+- name: Install the correct web server for RHEL
+  import_tasks: redhat.yml
+  when: ansible_os_family == 'RedHat'
+
+- name: Install the correct web server for Debian
+  import_tasks: debian.yml
+  when: ansible_os_family == 'Debian'
+
+# roles/example/tasks/redhat.yml
+- name: Install web server
+  ansible.builtin.yum:
+    name: "httpd"
+    state: present
+
+# roles/example/tasks/debian.yml
+- name: Install web server
+  ansible.builtin.apt:
+    name: "apache2"
+    state: present
+```
