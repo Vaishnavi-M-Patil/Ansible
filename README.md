@@ -437,6 +437,68 @@ The copy module is used to copy files from your Ansible control node (local mach
 
 ---
 
+## win_copy module :
+````
+```
+- This module is part of the ansible.windows collection (version 2.8.0).
+- You might already have this collection installed if you are using the ansible package. It is not included in ansible-core. To check whether it is installed, run 
+```ansible-galaxy collection list```
+- To install it, use: ```ansible-galaxy collection install ansible.windows```
+- To use it in a playbook, specify: ```ansible.windows.win_copy```
+```
+````
+- The win_copy module copies a file on the local box to remote windows locations.
+- For non-Windows targets, use the ansible.builtin.copy module instead.
+- It is recommended that backslashes \ are used instead of / when dealing with remote paths.
+#### Example:
+```yaml
+- name: Copy a single file
+  ansible.windows.win_copy:
+    src: /srv/myfiles/foo.conf
+    dest: C:\Temp\renamed-foo.conf
+
+- name: Copy a single file, but keep a backup
+  ansible.windows.win_copy:
+    src: /srv/myfiles/foo.conf
+    dest: C:\Temp\renamed-foo.conf
+    backup: true
+
+- name: Copy a single file keeping the filename
+  ansible.windows.win_copy:
+    src: /src/myfiles/foo.conf
+    dest: C:\Temp\
+
+- name: Copy folder to C:\Temp (results in C:\Temp\temp_files)
+  ansible.windows.win_copy:
+    src: files/temp_files
+    dest: C:\Temp
+
+- name: Copy folder contents recursively
+  ansible.windows.win_copy:
+    src: files/temp_files/
+    dest: C:\Temp
+
+- name: Copy a single file where the source is on the remote host
+  ansible.windows.win_copy:
+    src: C:\Temp\foo.txt
+    dest: C:\ansible\foo.txt
+    remote_src: true
+
+- name: Copy a folder recursively where the source is on the remote host
+  ansible.windows.win_copy:
+    src: C:\Temp
+    dest: C:\ansible
+    remote_src: true
+
+- name: Set the contents of a file
+  ansible.windows.win_copy:
+    content: abc123
+    dest: C:\Temp\foo.txt
+
+```
+
+---
+
 ## ✅ what is lineinfile, blockinfile, tags in ansible:
 In Ansible, lineinfile and blockinfile are modules used to manage the contents of files on a target system, especially for configuration management. 
 
