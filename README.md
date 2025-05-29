@@ -14,7 +14,7 @@
 - hosts --> Inventory file defining groups and IPs of managed nodes
 - ansible playbook (*.yml) --> A YAML file that defines a set of tasks to be executed on managed nodes.
 
-![Screenshot (409)](https://github.com/Vaishnavi-M-Patil/AnsibleRepo/blob/main/diagram.jpg)
+![Screenshot (409)](https://github.com/Vaishnavi-M-Patil/AnsibleRepo/blob/main/assets/diagram.jpg)
 
 ### 🛠️ Ansible Concepts:
 | **Concept**                      | **Description**                                                                                                                                       |
@@ -72,7 +72,7 @@
 ## ✅ How ansible works?
 1. Ansible uses playbook written in yaml syntax where we can define all tasks and configurations that we want to apply on all the servers.
 2. Along with playbook we need **hosts file or inventory file** which will contains IP address of all servers on which we want to run playbook.  
-![Screenshot](https://github.com/Vaishnavi-M-Patil/AnsibleRepo/blob/main/inventory_file.png)  
+![Screenshot](https://github.com/Vaishnavi-M-Patil/AnsibleRepo/blob/main/assets/inventory_file.png)  
    Here we used the private IP addresses of the instances because public IP addresses can change when an instance is stopped, whereas private IP addresses remain the same.
 4. After editing playbook and host file, you can run the ansible command which will run playbook on all the servers defined the host file using ssh.
 
@@ -87,7 +87,7 @@ The Ansible command is used for running the hostname command on all hosts listed
 **--private-key=./id_rsa-**	Path to the SSH private key for authentication.  
 **-m shell-**	Use the shell module to run shell commands.  
 **-a hostname-**	The argument to the shell module — in this case, the **hostname** command.  
-![Screenshot](https://github.com/Vaishnavi-M-Patil/AnsibleRepo/blob/main/ansible_cmd.png)
+![Screenshot](https://github.com/Vaishnavi-M-Patil/AnsibleRepo/blob/main/assets/ansible_cmd.png)
 
 
 ### 1stansible.yaml playbook(configuration file):
