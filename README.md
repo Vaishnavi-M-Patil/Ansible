@@ -623,3 +623,4 @@ Even though ansible_host is the actual IP address of managed nodes, inventory_ho
 ![playbook](https://github.com/Vaishnavi-M-Patil/Ansible/blob/main/assets/inventory-name-call.png)
 This would generate:
 ![output1](https://github.com/Vaishnavi-M-Patil/Ansible/blob/main/assets/ec2-output.png)
+![output1](https://github.com/Vaishnavi-M-Patil/Ansible/blob/main/assets/ubuntu-output.png)
