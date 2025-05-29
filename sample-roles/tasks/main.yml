@@ -27,5 +27,6 @@
     copy:
       content: "<h1>Hello, this is {{ inventory_hostname }}</h1>"
       dest: /var/www/html/index.html
-    notify: restart httpd
+    notify: 
+      - restart httpd
     when: ansible_os_family == "RedHat"
