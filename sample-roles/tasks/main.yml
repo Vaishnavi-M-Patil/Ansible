@@ -19,7 +19,7 @@
   - name: Edit index.html file on apache2
     copy:
       dest: /var/www/html/index.html
-      content: "Hello, this is {{ USER }} user"
+      content: "Hello, this is {{ ansible_user }} user"
     notify: restart apache2
     when: ansible_os_family == "Debian"
 
