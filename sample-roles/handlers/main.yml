@@ -1,19 +1,9 @@
 ---
 # handlers file for sample-roles
-- name: start apache2
-  systemd:
-    name: apache2
-    state: started
-
 - name: restart apache2
   systemd:
     name: apache2
     state: restarted
-
-- name: start httpd
-  systemd:
-    name: httpd
-    state: started
 
 - name: restart httpd
   systemd:

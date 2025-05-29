@@ -7,25 +7,24 @@
       state: present
       update_cache: yes
     when: ansible_os_family == "Debian"
-    notify: start apache2
 
   - name: install httpd on rehat based systems
     yum:
       name: "{{ ec2_pkg }}"
       state: present
     when: ansible_os_family == "RedHat"
-    notify: start httpd
   
   - name: Edit index.html file on apache2
     copy:
       dest: /var/www/html/index.html
-      content: "<h1>Hello, this is {{ inventory_hostname }}</h1>"
-    notify: restart apache2
+      content: "<h1>Hello, this is {{ ansible_user }}</h1>"
+    notify: 
+      - restart apache2
     when: ansible_os_family == "Debian"
 
   - name: Edit index.html file on httpd
     copy:
-      content: "<h1>Hello, this is {{ inventory_hostname }}</h1>"
+      src: index.html
       dest: /var/www/html/index.html
     notify: 
       - restart httpd
