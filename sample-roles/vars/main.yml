@@ -1,4 +1,0 @@
----
-# vars file for sample-roles
-ubuntu_pkg : apache2
-ec2_pkg: httpd
