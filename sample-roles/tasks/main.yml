@@ -1,3 +1,30 @@
-#SPDX-License-Identifier: MIT-0
 ---
 # tasks file for sample-roles
+# This file is used to define tasks for the sample-roles project.
+  - name: Install apache2
+    apt:
+      name: "{{ ubuntu_pkg }}"
+      state: present
+      update_cache: yes
+    when: ansible_os_family == "Debian"
+    notify: start apache2
+
+  - name: install httpd
+    yum:
+      name: "{{ ec2_pkg }}"
+      state: present
+    when: ansible_os_family == "RedHat"
+    notify: start httpd
+  
+  - name: Edit index.html file on apache2
+    copy:
+      dest: /var/www/html/index.html
+      content: "Hello, this is {{ USER }} user"
+    notify: restart apache2
+    when: ansible_os_family == "Debian"
+
+  - name: Edit index.html file on httpd
+    copy:
+      src: index.html
+      dest: /var/www/html/index.html
+    notify: restart httpd

@@ -1,0 +1,6 @@
+- name: Installation of packages on managed nodes
+  hosts: all
+  become: yes
+  tasks:
+    roles:
+      - sample-roles
