@@ -1,0 +1,12 @@
+---
+# handlers file for sample-roles
+- name: restart apache2
+  systemd:
+    name: apache2
+    state: restarted
+
+- name: restart httpd
+  systemd:
+    name: httpd
+    state: restarted
+    

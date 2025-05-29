@@ -1,0 +1,31 @@
+---
+# tasks file for sample-roles
+# This file is used to define tasks for the sample-roles project.
+  - name: Install apache2 on debian based systems
+    apt:
+      name: "{{ ubuntu_pkg }}"
+      state: present
+      update_cache: yes
+    when: ansible_os_family == "Debian"
+
+  - name: install httpd on rehat based systems
+    yum:
+      name: "{{ ec2_pkg }}"
+      state: present
+    when: ansible_os_family == "RedHat"
+  
+  - name: Edit index.html file on apache2
+    copy:
+      dest: /var/www/html/index.html
+      content: "<h1>Hello, this is {{ ansible_user }}</h1>"
+    notify: 
+      - restart apache2
+    when: ansible_os_family == "Debian"
+
+  - name: Edit index.html file on httpd
+    copy:
+      src: index.html
+      dest: /var/www/html/index.html
+    notify: 
+      - restart httpd
+    when: ansible_os_family == "RedHat"
