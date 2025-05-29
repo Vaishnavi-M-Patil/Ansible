@@ -9,7 +9,7 @@
     when: ansible_os_family == "Debian"
     notify: start apache2
 
-  - name: install httpd
+  - name: install httpd on rehat based systems
     yum:
       name: "{{ ec2_pkg }}"
       state: present
@@ -19,7 +19,7 @@
   - name: Edit index.html file on apache2
     copy:
       dest: /var/www/html/index.html
-      content: "Hello, this is {{ ansible_user }} user"
+      content: "<h1>Hello, this is {{ ansible_user }} user</h1>"
     notify: restart apache2
     when: ansible_os_family == "Debian"
 
