@@ -1,7 +1,7 @@
 ---
 # tasks file for sample-roles
 # This file is used to define tasks for the sample-roles project.
-  - name: Install apache2
+  - name: Install apache2 on debian based systems
     apt:
       name: "{{ ubuntu_pkg }}"
       state: present
@@ -28,3 +28,4 @@
       src: index.html
       dest: /var/www/html/index.html
     notify: restart httpd
+    when: ansible_os_family == "RedHat"
