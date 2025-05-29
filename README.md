@@ -606,3 +606,20 @@ You can add other YAML files in some directories, but they won’t be used by de
     name: "apache2"
     state: present
 ```
+---
+
+## What is inventory_hostname?
+- inventory_hostname is a special Ansible variable that refers to the name of the host as it is defined in your inventory file.
+- If you don’t create an alias in your Ansible inventory file then inventory_hostname will simply be the IP address itself.
+
+#### `hosts` file:
+![inventory-name](https://github.com/Vaishnavi-M-Patil/Ansible/blob/main/assets/inventory-name-set.png)
+In this case:
+- inventory_hostname for 172.31.88.128 is ubuntu-server.
+- inventory_hostname for 172.31.85.135 is ec2-server.
+Even though ansible_host is the actual IP address of managed nodes, inventory_hostname refers to the alias (ubuntu-server, ec2-server).
+
+#### In a playbook:
+![playbook](https://github.com/Vaishnavi-M-Patil/Ansible/blob/main/assets/inventory-name-call.png)
+This would generate:
+![output1](https://github.com/Vaishnavi-M-Patil/Ansible/blob/main/assets/ec2-output.png)
