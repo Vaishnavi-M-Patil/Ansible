@@ -72,7 +72,9 @@
 ## ✅ How ansible works?
 1. Ansible uses playbook written in yaml syntax where we can define all tasks and configurations that we want to apply on all the servers.
 2. Along with playbook we need **hosts file or inventory file** which will contains IP address of all servers on which we want to run playbook.
-3. After editing playbook and host file, you can run the ansible command which will run playbook on all the servers defined the host file using ssh.
+![Screenshot](https://github.com/Vaishnavi-M-Patil/AnsibleRepo/blob/main/hosts_file.png)
+   Here we used the private IP addresses of the instances because public IP addresses can change when an instance is stopped, whereas private IP addresses remain the same.
+4. After editing playbook and host file, you can run the ansible command which will run playbook on all the servers defined the host file using ssh.
 
 ```
 ansible -i hosts all -u ubuntu --private-key=./id_rsa -m shell -a hostname
